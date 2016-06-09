@@ -12,11 +12,11 @@ public class Node {
 	public boolean empty;
 	public Type type;
 	public int id;
+	public int firstCharIndex;
 	public char nonterminal;
 	
-	public Node( Type type, Node parent){
+	public Node( Type type){
 		this.type = type;
-		this.parent = parent;
 		if( type != Type.LEAF){
 			id = -1;
 		}else{
@@ -27,33 +27,33 @@ public class Node {
 		first = new ArrayList<Node>();
 		last = new ArrayList<Node>();
 		next = new ArrayList<Node>();
+		firstCharIndex = -1;
 		
 	}
 
 	public void addParent( Node parent){
+		if( parent == null) return;
 		this.parent = parent;
 		parent.children.add( this);
+		if( parent.firstCharIndex  == -1 || parent.firstCharIndex > firstCharIndex){
+			parent.firstCharIndex = firstCharIndex;
+		}
 	}
 
-	public void Debug(){
+	public void Debug(String tabs){
 		if( type == Type.LEAF){
-			System.out.println(nonterminal);
+			System.out.print(tabs+ nonterminal+ id);
 		}else{
-			System.out.println(type);
+			System.out.print(tabs+ type);
 		}
-
-		if( children.size() > 0){
-
-			System.out.println("{");
-		}
+		//tabs += '\t';
+		if( children.size() > 0) System.out.print(tabs+ "{");
+		
 		for( int i = 0; i < children.size(); i++){
-			children.get(i).Debug();
+			children.get(i).Debug(tabs);
 		}
 
-		if( children.size() > 0){
-
-			System.out.println("}");
-		}
+		if( children.size() > 0) System.out.print(tabs+ "}");
 
 	}
 	
