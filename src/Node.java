@@ -96,6 +96,10 @@ public class Node {
         attributes.first.addAll(list);
     }
 
+    public void addFirst(int value) {
+        attributes.first.add(value);
+    }
+
     public ArrayList<Integer> getNext() {
         return attributes.next;
     }
@@ -110,6 +114,10 @@ public class Node {
 
     public void addAllLast(ArrayList<Integer> list) {
         attributes.last.addAll(list);
+    }
+
+    public void addLast(int value) {
+        attributes.last.add(value);
     }
 
     public Node getLeft() {
