@@ -4,6 +4,8 @@ bin1/
 .classpath
 .project
 
+.idea
+
 .DS_Store
 .DS_Store?
 ._*
