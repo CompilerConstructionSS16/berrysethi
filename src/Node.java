@@ -5,6 +5,17 @@ class NodeAttributes {
     public ArrayList<Integer> first = new ArrayList<>();
     public ArrayList<Integer> next = new ArrayList<>();
     public ArrayList<Integer> last = new ArrayList<>();
+
+    public String toString() {
+        String str = new String();
+
+        str += empty + " | ";
+        str += first.toString() + " | ";
+        str += next.toString() + " | ";
+        str += first.toString();
+
+        return str;
+    }
 }
 
 public class Node {

@@ -19,6 +19,22 @@ public class AttributeCalculator {
         empty(node);
     }
 
+    private static void empty(Node node) {
+        if (node.type == Node.Type.OR) {
+            node.attributes.empty =
+                    node.getLeft().getEmpty() | node.getRight().getEmpty();
+        } else if (node.type == Node.Type.CONCAT) {
+            node.attributes.empty =
+                    node.getLeft().getEmpty() && node.getRight().getEmpty();
+        } else if (node.type == Node.Type.ASTERISK) {
+            node.attributes.empty = true;
+        } else if (node.type == Node.Type.Q_MARK) {
+            node.attributes.empty = true;
+        } else if (node.type == Node.Type.PLUS) {
+            node.attributes.empty = false;
+        }
+    }
+
     /**
      * Post-order.
      */
@@ -33,6 +49,24 @@ public class AttributeCalculator {
         if (node.hasPair())
             firstdfs(node.getRight());
         first(node);
+    }
+
+    private static void first(Node node) {
+        if (node.type == Node.Type.OR) {
+            node.attributes.first.addAll(node.getLeft().getFirst());
+            node.attributes.first.addAll(node.getRight().getFirst());
+        } else if (node.type == Node.Type.CONCAT) {
+            if (node.getLeft().getEmpty()) {
+                node.attributes.first.addAll(node.getRight().getFirst());
+            }
+            node.attributes.first.addAll(node.getLeft().getFirst());
+        } else if (node.type == Node.Type.ASTERISK) {
+            node.attributes.first.addAll(node.getLeft().getFirst());
+        } else if (node.type == Node.Type.Q_MARK) {
+            node.attributes.first.addAll(node.getLeft().getFirst());
+        } else if (node.type == Node.Type.PLUS) {
+            node.attributes.first.addAll(node.getLeft().getFirst());
+        }
     }
 
     /**
@@ -52,60 +86,6 @@ public class AttributeCalculator {
         nextdfs(node.getLeft());
         if (node.hasPair())
             nextdfs(node.getRight());
-    }
-
-    /**
-     * Post-order.
-     */
-    public static void lastdfs(Node node) {
-        if (node.id != -1) {
-            // TODO
-            node.attributes.last.add(node.id);
-            return;
-        }
-
-        // Non-terminal
-        firstdfs(node.getLeft());
-        if (node.hasPair())
-            firstdfs(node.getRight());
-        first(node);
-    }
-
-    private static void empty(Node node) {
-        if (node.type == Node.Type.OR) {
-            node.attributes.last.addAll(node.getLeft().getLast());
-            node.attributes.last.addAll(node.getRight().getLast());
-        } else if (node.type == Node.Type.CONCAT) {
-            if (node.getRight().getEmpty()) {
-                node.attributes.last.addAll(node.getLeft().getLast());
-            }
-            node.attributes.last.addAll(node.getRight().getLast());
-        } else if (node.type == Node.Type.ASTERISK) {
-            node.attributes.last.addAll(node.getLeft().getLast());
-        } else if (node.type == Node.Type.Q_MARK) {
-            node.attributes.last.addAll(node.getLeft().getLast());
-        } else if (node.type == Node.Type.PLUS) {
-            // TODO
-            node.attributes.last.addAll(node.getLeft().getLast());
-        }
-    }
-
-    private static void first(Node node) {
-        if (node.type == Node.Type.OR) {
-            node.attributes.first.addAll(node.getLeft().getFirst());
-            node.attributes.first.addAll(node.getRight().getFirst());
-        } else if (node.type == Node.Type.CONCAT) {
-            if (node.getLeft().getEmpty()) {
-                node.attributes.first.addAll(node.getRight().getFirst());
-            }
-            node.attributes.first.addAll(node.getLeft().getFirst());
-        } else if (node.type == Node.Type.ASTERISK) {
-            node.attributes.first.addAll(node.getLeft().getFirst());
-        } else if (node.type == Node.Type.Q_MARK) {
-            node.attributes.first.addAll(node.getLeft().getFirst());
-        } else if (node.type == Node.Type.PLUS) {
-            node.attributes.first.addAll(node.getLeft().getFirst());
-        }
     }
 
     private static void next(Node node) {
@@ -131,6 +111,23 @@ public class AttributeCalculator {
         }
     }
 
+    /**
+     * Post-order.
+     */
+    public static void lastdfs(Node node) {
+        if (node.id != -1) {
+            // TODO
+            node.attributes.last.add(node.id);
+            return;
+        }
+
+        // Non-terminal
+        lastdfs(node.getLeft());
+        if (node.hasPair())
+            lastdfs(node.getRight());
+        last(node);
+    }
+
     private static void last(Node node) {
         if (node.type == Node.Type.OR) {
             node.getLeft().getNext().addAll(node.attributes.next);
@@ -152,6 +149,21 @@ public class AttributeCalculator {
             //node.getLeft().getNext().addAll(node.attributes.next);
             // TODO
         }
+    }
+
+    public static void printAttributes(Node node) {
+        if (node.id != -1) {
+            System.out.println(node.type + " " + node.terminal +
+                    node.id + " " + node.attributes.toString());
+            return;
+        }
+
+        System.out.println(node.type + " " + node.attributes.toString());
+
+        // Non-terminal
+        printAttributes(node.getLeft());
+        if (node.hasPair())
+            printAttributes(node.getRight());
     }
 
 }
