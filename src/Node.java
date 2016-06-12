@@ -84,16 +84,32 @@ public class Node {
         return attributes.empty;
     }
 
+    public void setEmpty(boolean empty) {
+        attributes.empty = empty;
+    }
+
     public ArrayList<Integer> getFirst() {
         return attributes.first;
+    }
+
+    public void addAllFirst(ArrayList<Integer> list) {
+        attributes.first.addAll(list);
     }
 
     public ArrayList<Integer> getNext() {
         return attributes.next;
     }
 
+    public void addAllNext(ArrayList<Integer> list) {
+        attributes.next.addAll(list);
+    }
+
     public ArrayList<Integer> getLast() {
         return attributes.last;
+    }
+
+    public void addAllLast(ArrayList<Integer> list) {
+        attributes.last.addAll(list);
     }
 
     public Node getLeft() {

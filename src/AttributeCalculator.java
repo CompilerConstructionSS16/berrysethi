@@ -8,7 +8,7 @@ public class AttributeCalculator {
      */
     public static void emptydfs(Node node) {
         if (node.id != -1) {
-            node.attributes.empty = false;
+            node.setEmpty(false);
             return;
         }
 
@@ -21,17 +21,15 @@ public class AttributeCalculator {
 
     private static void empty(Node node) {
         if (node.type == Node.Type.OR) {
-            node.attributes.empty =
-                    node.getLeft().getEmpty() | node.getRight().getEmpty();
+            node.setEmpty(node.getLeft().getEmpty() | node.getRight().getEmpty());
         } else if (node.type == Node.Type.CONCAT) {
-            node.attributes.empty =
-                    node.getLeft().getEmpty() && node.getRight().getEmpty();
+            node.setEmpty(node.getLeft().getEmpty() && node.getRight().getEmpty());
         } else if (node.type == Node.Type.ASTERISK) {
-            node.attributes.empty = true;
+            node.setEmpty(true);
         } else if (node.type == Node.Type.Q_MARK) {
-            node.attributes.empty = true;
+            node.setEmpty(true);
         } else if (node.type == Node.Type.PLUS) {
-            node.attributes.empty = false;
+            node.setEmpty(false);
         }
     }
 
@@ -153,12 +151,12 @@ public class AttributeCalculator {
 
     public static void printAttributes(Node node) {
         if (node.id != -1) {
-            System.out.println(node.type + " " + node.terminal +
-                    node.id + " " + node.attributes.toString());
+            System.out.println(node.type + " " + node.terminal + node.id +
+                    ": " + node.attributes.toString());
             return;
         }
 
-        System.out.println(node.type + " " + node.attributes.toString());
+        System.out.println(node.type + ": " + node.attributes.toString());
 
         // Non-terminal
         printAttributes(node.getLeft());
