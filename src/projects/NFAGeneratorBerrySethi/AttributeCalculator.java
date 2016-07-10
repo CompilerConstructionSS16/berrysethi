@@ -1,3 +1,5 @@
+package projects.NFAGeneratorBerrySethi;
+
 /**
  * Provides static recursive functions for computing the node attributes.
  */
@@ -6,8 +8,8 @@ public class AttributeCalculator {
     /**
      * Post-order.
      */
-    public static void emptydfs(Node node) {
-        if (node.id != -1) {
+    public static void emptydfs(NodeInterface node) {
+        if (node.isLeaf()) {
             node.setEmpty(false);
             return;
         }
@@ -19,24 +21,24 @@ public class AttributeCalculator {
         empty(node);
     }
 
-    private static void empty(Node node) {
-        if (node.type == Node.Type.OR) {
+    private static void empty(NodeInterface node) {
+        if (node.isOr()) {
 
             node.setEmpty(node.getLeft().getEmpty() | node.getRight().getEmpty());
 
-        } else if (node.type == Node.Type.CONCAT) {
+        } else if (node.isConcat()) {
 
             node.setEmpty(node.getLeft().getEmpty() && node.getRight().getEmpty());
 
-        } else if (node.type == Node.Type.ASTERISK) {
+        } else if (node.isAsterisk()) {
 
             node.setEmpty(true);
 
-        } else if (node.type == Node.Type.Q_MARK) {
+        } else if (node.isQMark()) {
 
             node.setEmpty(true);
 
-        } else if (node.type == Node.Type.PLUS) {
+        } else if (node.isPlus()) {
 
             node.setEmpty(false);
 
@@ -46,9 +48,9 @@ public class AttributeCalculator {
     /**
      * Post-order.
      */
-    public static void firstdfs(Node node) {
-        if (node.id != -1) {
-            node.addFirst(node.id);
+    public static void firstdfs(NodeInterface node) {
+        if (node.isLeaf()) {
+            node.addFirst(node.getId());
             return;
         }
 
@@ -59,28 +61,28 @@ public class AttributeCalculator {
         first(node);
     }
 
-    private static void first(Node node) {
-        if (node.type == Node.Type.OR) {
+    private static void first(NodeInterface node) {
+        if (node.isOr()) {
 
             node.addAllFirst(node.getLeft().getFirst());
             node.addAllFirst(node.getRight().getFirst());
 
-        } else if (node.type == Node.Type.CONCAT) {
+        } else if (node.isConcat()) {
 
             if (node.getLeft().getEmpty()) {
                 node.addAllFirst(node.getRight().getFirst());
             }
             node.addAllFirst(node.getLeft().getFirst());
 
-        } else if (node.type == Node.Type.ASTERISK) {
+        } else if (node.isAsterisk()) {
 
             node.addAllFirst(node.getLeft().getFirst());
 
-        } else if (node.type == Node.Type.Q_MARK) {
+        } else if (node.isQMark()) {
 
             node.addAllFirst(node.getLeft().getFirst());
 
-        } else if (node.type == Node.Type.PLUS) {
+        } else if (node.isPlus()) {
 
             node.addAllFirst(node.getLeft().getFirst());
 
@@ -90,10 +92,9 @@ public class AttributeCalculator {
     /**
      * Pre-order.
      */
-    public static void nextdfs(Node node) {
-        if (node.id != -1) {
-            // TODO
-            //node.attributes.next.add(node.id);
+    public static void nextdfs(NodeInterface node) {
+        if (node.isLeaf()) {
+            // Nothing to do here, next attribute is inherited.
             return;
         }
 
@@ -107,13 +108,13 @@ public class AttributeCalculator {
             nextdfs(node.getRight());
     }
 
-    private static void next(Node node) {
-        if (node.type == Node.Type.OR) {
+    private static void next(NodeInterface node) {
+        if (node.isOr()) {
 
             node.getLeft().addAllNext(node.getNext());
             node.getRight().addAllNext(node.getNext());
 
-        } else if (node.type == Node.Type.CONCAT) {
+        } else if (node.isConcat()) {
             node.getRight().addAllNext(node.getNext());
 
             if (node.getRight().getEmpty()) {
@@ -121,16 +122,16 @@ public class AttributeCalculator {
             }
             node.getLeft().addAllNext(node.getRight().getFirst());
 
-        } else if (node.type == Node.Type.ASTERISK) {
+        } else if (node.isAsterisk()) {
 
             node.getLeft().addAllNext(node.getNext());
             node.getLeft().addAllNext(node.getLeft().getFirst());
 
-        } else if (node.type == Node.Type.Q_MARK) {
+        } else if (node.isQMark()) {
 
             node.getLeft().addAllNext(node.getNext());
 
-        } else if (node.type == Node.Type.PLUS) {
+        } else if (node.isPlus()) {
 
             node.getLeft().addAllNext(node.getNext());
             node.getLeft().addAllNext(node.getLeft().getFirst());
@@ -141,9 +142,9 @@ public class AttributeCalculator {
     /**
      * Post-order.
      */
-    public static void lastdfs(Node node) {
-        if (node.id != -1) {
-            node.addLast(node.id);
+    public static void lastdfs(NodeInterface node) {
+        if (node.isLeaf()) {
+            node.addLast(node.getId());
             return;
         }
 
@@ -154,47 +155,32 @@ public class AttributeCalculator {
         last(node);
     }
 
-    private static void last(Node node) {
-        if (node.type == Node.Type.OR) {
+    private static void last(NodeInterface node) {
+        if (node.isOr()) {
 
             node.addAllLast(node.getLeft().getLast());
             node.addAllLast(node.getRight().getLast());
 
-        } else if (node.type == Node.Type.CONCAT) {
+        } else if (node.isConcat()) {
 
             if (node.getRight().getEmpty()) {
                 node.addAllLast(node.getLeft().getLast());
             }
             node.addAllLast(node.getRight().getLast());
 
-        } else if (node.type == Node.Type.ASTERISK) {
+        } else if (node.isAsterisk()) {
 
             node.addAllLast(node.getLeft().getLast());
 
-        } else if (node.type == Node.Type.Q_MARK) {
+        } else if (node.isQMark()) {
 
             node.addAllLast(node.getLeft().getLast());
 
-        } else if (node.type == Node.Type.PLUS) {
+        } else if (node.isPlus()) {
 
             node.addAllLast(node.getLeft().getLast());
 
         }
-    }
-
-    public static void printAttributes(Node node) {
-        if (node.id != -1) {
-            System.out.println(node.type + " " + node.terminal + node.id +
-                    ": " + node.attributes.toString());
-            return;
-        }
-
-        System.out.println(node.type + ": " + node.attributes.toString());
-
-        // Non-terminal
-        printAttributes(node.getLeft());
-        if (node.hasPair())
-            printAttributes(node.getRight());
     }
 
 }

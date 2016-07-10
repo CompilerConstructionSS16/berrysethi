@@ -1,3 +1,8 @@
+package projects.NFAGeneratorBerrySethi.Node;
+
+import projects.NFAGeneratorBerrySethi.AttributeCalculator;
+import projects.NFAGeneratorBerrySethi.NodeInterface;
+
 import java.util.ArrayList;
 
 class NodeAttributes {
@@ -7,7 +12,7 @@ class NodeAttributes {
     public ArrayList<Integer> last = new ArrayList<>();
 
     public String toString() {
-        String str = new String();
+        String str = "";
 
         str += empty + " | ";
         str += first.toString() + " | ";
@@ -18,7 +23,8 @@ class NodeAttributes {
     }
 }
 
-public class Node {
+public class Node implements NodeInterface {
+
     public enum Type {
         CONCAT, // ab
         OR, // a|b
@@ -30,17 +36,13 @@ public class Node {
     }
 
     private static int idCounter = 0;
-
-    private Node parent = null;
     public ArrayList<Node> children = new ArrayList<>();
-
     public Type type;
     public int id;
-
     public char terminal;
     public int firstCharIndex = -1;
-
     public NodeAttributes attributes = new NodeAttributes();
+    private Node parent = null;
 
     public Node(Type type) {
         this.type = type;
@@ -66,6 +68,17 @@ public class Node {
         }
     }
 
+    public void computeAttributes() {
+        System.out.println("Empty attributes ...");
+        AttributeCalculator.emptydfs(this);
+        System.out.println("First attributes ...");
+        AttributeCalculator.firstdfs(this);
+        System.out.println("Next attributes ...");
+        AttributeCalculator.nextdfs(this);
+        System.out.println("Last attributes ...");
+        AttributeCalculator.lastdfs(this);
+    }
+
     public void Debug(String tab) {
         tab = tab + "    ";
         if (type == Type.LEAF) {
@@ -80,81 +93,128 @@ public class Node {
         System.out.println(tab + "}");
     }
 
+    public static void printAttributes(Node node) {
+        if (node.isLeaf()) {
+            System.out.println(node.type + " " + node.terminal + node.id +
+                    ": " + node.attributes.toString());
+            return;
+        }
+
+        System.out.println(node.type + ": " + node.attributes.toString());
+
+        // Non-terminal
+        printAttributes(node.getLeft());
+        if (node.hasPair())
+            printAttributes(node.getRight());
+    }
+
+    @Override
     public boolean getEmpty() {
         return attributes.empty;
     }
 
+    @Override
     public void setEmpty(boolean empty) {
         attributes.empty = empty;
     }
 
+    @Override
     public ArrayList<Integer> getFirst() {
         return attributes.first;
     }
 
+    @Override
     public void addAllFirst(ArrayList<Integer> list) {
         attributes.first.addAll(list);
     }
 
+    @Override
     public void addFirst(int value) {
         attributes.first.add(value);
     }
 
+    @Override
     public ArrayList<Integer> getNext() {
         return attributes.next;
     }
 
+    @Override
     public void addAllNext(ArrayList<Integer> list) {
         attributes.next.addAll(list);
     }
 
+    @Override
     public ArrayList<Integer> getLast() {
         return attributes.last;
     }
 
+    @Override
     public void addAllLast(ArrayList<Integer> list) {
         attributes.last.addAll(list);
     }
 
+    @Override
     public void addLast(int value) {
         attributes.last.add(value);
     }
 
+    @Override
     public Node getLeft() {
         if (children.size() > 0)
             return children.get(0);
         return null;
     }
 
+    @Override
     public Node getRight() {
         if (hasPair())
             return children.get(1);
         return null;
     }
 
+    @Override
     public boolean hasPair() {
         if (children.size() > 1)
             return true;
         return false;
     }
 
-    public Node getParents() {
-        return parent;
+    @Override
+    public boolean isLeaf() {
+        if (id != -1) {
+            return true;
+        }
+        return false;
     }
 
-    public boolean hasParent() {
-        return parent != null;
+    @Override
+    public boolean isOr() {
+        return type == Type.OR;
     }
 
-    public void computeAttributes() {
-        System.out.println("Empty attributes ...");
-        AttributeCalculator.emptydfs(this);
-        System.out.println("First attributes ...");
-        AttributeCalculator.firstdfs(this);
-        System.out.println("Next attributes ...");
-        AttributeCalculator.nextdfs(this);
-        System.out.println("Last attributes ...");
-        AttributeCalculator.lastdfs(this);
+    @Override
+    public boolean isConcat() {
+        return type == Type.CONCAT;
+    }
+
+    @Override
+    public boolean isAsterisk() {
+        return type == Type.ASTERISK;
+    }
+
+    @Override
+    public boolean isQMark() {
+        return type == Type.Q_MARK;
+    }
+
+    @Override
+    public boolean isPlus() {
+        return type == Type.PLUS;
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
 }
