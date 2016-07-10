@@ -1,6 +1,5 @@
 package projects.NFAGeneratorBerrySethi.Node;
 
-import projects.NFAGeneratorBerrySethi.AttributeCalculator;
 import projects.NFAGeneratorBerrySethi.NodeInterface;
 
 import java.util.ArrayList;
@@ -25,16 +24,6 @@ class NodeAttributes {
 
 public class Node implements NodeInterface {
 
-    public enum Type {
-        CONCAT, // ab
-        OR, // a|b
-        Q_MARK, // a? : Zero or one
-        ASTERISK, // a* : Zero or more
-        PLUS, // a+ : One or more
-
-        LEAF // Terminal character
-    }
-
     private static int idCounter = 0;
     public ArrayList<Node> children = new ArrayList<>();
     public Type type;
@@ -43,7 +32,6 @@ public class Node implements NodeInterface {
     public int firstCharIndex = -1;
     public NodeAttributes attributes = new NodeAttributes();
     private Node parent = null;
-
     public Node(Type type) {
         this.type = type;
 
@@ -54,43 +42,6 @@ public class Node implements NodeInterface {
             id = idCounter;
             idCounter++;
         }
-    }
-
-    public void addParent(Node parent) {
-        if (parent == null)
-            return;
-
-        this.parent = parent;
-        parent.children.add(this);
-
-        if (parent.firstCharIndex == -1 || parent.firstCharIndex > firstCharIndex) {
-            parent.firstCharIndex = firstCharIndex;
-        }
-    }
-
-    public void computeAttributes() {
-        System.out.println("Empty attributes ...");
-        AttributeCalculator.emptydfs(this);
-        System.out.println("First attributes ...");
-        AttributeCalculator.firstdfs(this);
-        System.out.println("Next attributes ...");
-        AttributeCalculator.nextdfs(this);
-        System.out.println("Last attributes ...");
-        AttributeCalculator.lastdfs(this);
-    }
-
-    public void Debug(String tab) {
-        tab = tab + "    ";
-        if (type == Type.LEAF) {
-            System.out.println(tab + terminal + id);
-            return;
-        }
-
-        System.out.println(tab + type + " {");
-        for (int i = 0; i < children.size(); i++) {
-            children.get(i).Debug(tab);
-        }
-        System.out.println(tab + "}");
     }
 
     public static void printAttributes(Node node) {
@@ -106,6 +57,32 @@ public class Node implements NodeInterface {
         printAttributes(node.getLeft());
         if (node.hasPair())
             printAttributes(node.getRight());
+    }
+
+    public void addParent(Node parent) {
+        if (parent == null)
+            return;
+
+        this.parent = parent;
+        parent.children.add(this);
+
+        if (parent.firstCharIndex == -1 || parent.firstCharIndex > firstCharIndex) {
+            parent.firstCharIndex = firstCharIndex;
+        }
+    }
+
+    public void Debug(String tab) {
+        tab = tab + "    ";
+        if (type == Type.LEAF) {
+            System.out.println(tab + terminal + id);
+            return;
+        }
+
+        System.out.println(tab + type + " {");
+        for (int i = 0; i < children.size(); i++) {
+            children.get(i).Debug(tab);
+        }
+        System.out.println(tab + "}");
     }
 
     @Override
@@ -215,6 +192,16 @@ public class Node implements NodeInterface {
     @Override
     public int getId() {
         return id;
+    }
+
+    public enum Type {
+        CONCAT, // ab
+        OR, // a|b
+        Q_MARK, // a? : Zero or one
+        ASTERISK, // a* : Zero or more
+        PLUS, // a+ : One or more
+
+        LEAF // Terminal character
     }
 
 }
