@@ -21,15 +21,25 @@ public class AttributeCalculator {
 
     private static void empty(Node node) {
         if (node.type == Node.Type.OR) {
+
             node.setEmpty(node.getLeft().getEmpty() | node.getRight().getEmpty());
+
         } else if (node.type == Node.Type.CONCAT) {
+
             node.setEmpty(node.getLeft().getEmpty() && node.getRight().getEmpty());
+
         } else if (node.type == Node.Type.ASTERISK) {
+
             node.setEmpty(true);
+
         } else if (node.type == Node.Type.Q_MARK) {
+
             node.setEmpty(true);
+
         } else if (node.type == Node.Type.PLUS) {
+
             node.setEmpty(false);
+
         }
     }
 
@@ -51,19 +61,29 @@ public class AttributeCalculator {
 
     private static void first(Node node) {
         if (node.type == Node.Type.OR) {
+
             node.addAllFirst(node.getLeft().getFirst());
             node.addAllFirst(node.getRight().getFirst());
+
         } else if (node.type == Node.Type.CONCAT) {
+
             if (node.getLeft().getEmpty()) {
                 node.addAllFirst(node.getRight().getFirst());
             }
             node.addAllFirst(node.getLeft().getFirst());
+
         } else if (node.type == Node.Type.ASTERISK) {
+
             node.addAllFirst(node.getLeft().getFirst());
+
         } else if (node.type == Node.Type.Q_MARK) {
+
             node.addAllFirst(node.getLeft().getFirst());
+
         } else if (node.type == Node.Type.PLUS) {
+
             node.addAllFirst(node.getLeft().getFirst());
+
         }
     }
 
@@ -136,20 +156,29 @@ public class AttributeCalculator {
 
     private static void last(Node node) {
         if (node.type == Node.Type.OR) {
+
             node.addAllLast(node.getLeft().getLast());
             node.addAllLast(node.getRight().getLast());
+
         } else if (node.type == Node.Type.CONCAT) {
+
             if (node.getRight().getEmpty()) {
                 node.addAllLast(node.getLeft().getLast());
             }
             node.addAllLast(node.getRight().getLast());
 
         } else if (node.type == Node.Type.ASTERISK) {
+
             node.addAllLast(node.getLeft().getLast());
+
         } else if (node.type == Node.Type.Q_MARK) {
+
             node.addAllLast(node.getLeft().getLast());
+
         } else if (node.type == Node.Type.PLUS) {
+
             node.addAllLast(node.getLeft().getLast());
+
         }
     }
 
