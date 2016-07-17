@@ -14,7 +14,7 @@ import java.util.HashMap;
 
  */
 
-public class VisitorImpl implements RegularExpressionVisitor {
+public class AttributeCalculatorVisitor implements RegularExpressionVisitor {
 
     HashMap<RegularExpression, Boolean> empty = new HashMap<>();
 

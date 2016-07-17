@@ -4,7 +4,6 @@ import nfa.TransitionTable;
 import projects.NFAGenerator;
 import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 import regex.RegularExpression;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 
@@ -13,12 +12,17 @@ public class NFAGeneratorImpl implements NFAGenerator {
     @Override
     public TransitionTable nfaFromRegex(RegularExpression regex) {
 
-        VisitorImpl visitor = new VisitorImpl();
+        // Traverse tree and calculate attributes.
+        AttributeCalculatorVisitor visitor = new AttributeCalculatorVisitor();
         regex.accept(visitor);
 
-        // TODO
+        // Traverse tree (leaf nodes) and compute transition table.
+        TransitionTableVisitor tableVisitor = new TransitionTableVisitor();
+        regex.accept(tableVisitor);
 
-        throw new NotImplementedException();
+        TransitionTable table = tableVisitor.getTable();
+
+        return table;
     }
 
     public TransitionTableImpl nfaFromRegex(NodeInterface rootNode) {
