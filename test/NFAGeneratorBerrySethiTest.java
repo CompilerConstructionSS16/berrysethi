@@ -15,15 +15,15 @@ public class NFAGeneratorBerrySethiTest {
 
         buildtreeAndParse("(a|b)*a(a|b)");
 
-        /*
-        buildtreeAndParse("(ab)*|e+fg?");
+
+/*        buildtreeAndParse("(ab)*|e+fg?");
         buildtreeAndParse("ab*");
         buildtreeAndParse("((ab)*)");
         buildtreeAndParse("(ab)?|(e)*(dg+h)");
         buildtreeAndParse("(ab)?|(e)*(dg+h)");
         buildtreeAndParse("(a|b)*a(a|b)");
-        buildtreeAndParse("ab|xe");
-*/
+        buildtreeAndParse("ab|xe");*/
+
 
         assertEquals(1, 1);
     }
