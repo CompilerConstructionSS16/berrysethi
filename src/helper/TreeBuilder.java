@@ -1,3 +1,5 @@
+package helper;
+
 import projects.NFAGeneratorBerrySethi.Node.Node;
 
 /**

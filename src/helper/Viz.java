@@ -1,3 +1,5 @@
+package helper;
+
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
