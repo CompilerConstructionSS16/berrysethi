@@ -1,7 +1,7 @@
 package helper;
 
 import projects.NFAGeneratorBerrySethi.NFAGeneratorImpl;
-import projects.NFAGeneratorBerrySethi.Node.Node;
+import projects.NFAGeneratorBerrySethi.old.Node.Node;
 import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 
 import javax.swing.*;

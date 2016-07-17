@@ -1,4 +1,4 @@
-package projects.NFAGeneratorBerrySethi;
+package projects.NFAGeneratorBerrySethi.old;
 
 import java.util.ArrayList;
 

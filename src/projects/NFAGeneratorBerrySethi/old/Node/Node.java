@@ -1,6 +1,6 @@
-package projects.NFAGeneratorBerrySethi.Node;
+package projects.NFAGeneratorBerrySethi.old.Node;
 
-import projects.NFAGeneratorBerrySethi.NodeInterface;
+import projects.NFAGeneratorBerrySethi.old.NodeInterface;
 
 import java.util.ArrayList;
 

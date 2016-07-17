@@ -1,6 +1,6 @@
 package helper;
 
-import projects.NFAGeneratorBerrySethi.Node.Node;
+import projects.NFAGeneratorBerrySethi.old.Node.Node;
 
 /**
  * Creates a syntax tree based on a regular expression.
@@ -25,7 +25,7 @@ public class TreeBuilder {
         return nodeRoot;
     }
 
-    // This function returns the projects.NFAGeneratorBerrySethi.Node.Node from last of terminal in the string
+    // This function returns the Node from last of terminal in the string
     // or calculates the parse tree of the last parenthesis in the string
     // it depends on what is on the end
     public static Node LastNode(String input) {

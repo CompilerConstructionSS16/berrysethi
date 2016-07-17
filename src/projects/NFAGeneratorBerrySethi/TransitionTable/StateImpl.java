@@ -4,29 +4,37 @@ import nfa.State;
 
 public class StateImpl implements State {
 
-	private boolean isStart;
-	private boolean isFinal;
-	private int id;
-	public StateImpl( int id, boolean isStartState, boolean isFinalState){
-		isStart = isStartState;
-		isFinal = isFinalState;
-		this.id = id;
-	}
-	
-	@Override
-	public boolean isFinal() {
-		// TODO Auto-generated method stub
-		return isFinal;
-	}
+    private boolean start = false;
+    private boolean end = false;
+    private int id;
 
-	@Override
-	public boolean isStart() {
-		// TODO Auto-generated method stub
-		return isStart;
-	}
-	
-	public int id(){
-		return id;
-	}
+    public StateImpl(int id) {
+        this.id = id;
+    }
 
+    public StateImpl() {
+        this.id = -1;
+    }
+
+    public void setStart() {
+        start = true;
+    }
+
+    public void setFinal() {
+        end = true;
+    }
+
+    @Override
+    public boolean isFinal() {
+        return end;
+    }
+
+    @Override
+    public boolean isStart() {
+        return start;
+    }
+
+    public int getChar() {
+        return id;
+    }
 }

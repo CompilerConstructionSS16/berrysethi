@@ -1,5 +1,8 @@
 package projects.NFAGeneratorBerrySethi;
 
+import nfa.TransitionTable;
+import projects.NFAGeneratorBerrySethi.TransitionTable.StateImpl;
+import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 import regex.*;
 
 import java.util.ArrayList;
@@ -24,6 +27,8 @@ public class AttributeCalculatorVisitor implements RegularExpressionVisitor {
 
     HashMap<RegularExpression, ArrayList<RegularExpression>> last = new HashMap<>();
 
+    ArrayList<Char> leafs = new ArrayList<>();
+
     private void addValue(HashMap<RegularExpression, ArrayList<RegularExpression>> map,
                           RegularExpression key, RegularExpression value) {
         if (!map.containsKey(key)) {
@@ -47,6 +52,8 @@ public class AttributeCalculatorVisitor implements RegularExpressionVisitor {
         addValue(first, character, character);
 
         addValue(last, character, character);
+
+        leafs.add(character);
     }
 
     @Override
@@ -180,5 +187,41 @@ public class AttributeCalculatorVisitor implements RegularExpressionVisitor {
 
         addValue(next, child, next.get(expression));
         addValue(next, child, first.get(child));
+    }
+
+    public TransitionTable getTransitionTable() {
+        TransitionTableImpl table = new TransitionTableImpl();
+
+        StateImpl startState = new StateImpl();
+        table.setStartState(startState);
+
+        HashMap<Char, StateImpl> states = new HashMap<>();
+
+        int id = 0;
+        for (Char character : leafs) {
+            states.put(character, new StateImpl(id++));
+        }
+
+        if (empty.get(startState))
+            startState.setFinal();
+
+        for (RegularExpression exp : last.get(startState))
+            states.get(exp).setFinal();
+
+        for (Char character : leafs) {
+            if (first.get(startState).contains(character)) {
+                table.addEntry(startState, states.get(character), character.getCharacter());
+            }
+
+            for (Char character_j : leafs) {
+                if (next.get(character).contains(character_j))
+                    table.addEntry(states.get(character),
+                            states.get(character_j),
+                            character_j.getCharacter());
+            }
+
+        }
+
+        return table;
     }
 }

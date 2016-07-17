@@ -2,10 +2,7 @@ package projects.NFAGeneratorBerrySethi;
 
 import nfa.TransitionTable;
 import projects.NFAGenerator;
-import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 import regex.RegularExpression;
-
-import java.util.ArrayList;
 
 public class NFAGeneratorImpl implements NFAGenerator {
 
@@ -16,16 +13,12 @@ public class NFAGeneratorImpl implements NFAGenerator {
         AttributeCalculatorVisitor visitor = new AttributeCalculatorVisitor();
         regex.accept(visitor);
 
-        // Traverse tree (leaf nodes) and compute transition table.
-        TransitionTableVisitor tableVisitor = new TransitionTableVisitor();
-        regex.accept(tableVisitor);
-
-        TransitionTable table = tableVisitor.getTable();
+        TransitionTable table = visitor.getTransitionTable();
 
         return table;
     }
 
-    public TransitionTableImpl nfaFromRegex(NodeInterface rootNode) {
+    /*public TransitionTableImpl nfaFromRegex(NodeInterface rootNode) {
 
         System.out.println("Compute helper attributes.");
 
@@ -39,7 +32,7 @@ public class NFAGeneratorImpl implements NFAGenerator {
         AttributeCalculator.lastdfs(rootNode);
 
         System.out.println("Create transition table.");
-        TransitionTableImpl table = new TransitionTableImpl();
+        TransitionTableImpl table = new TransitionTableImplMy();
 
         table.addStart(-1);
 
@@ -78,5 +71,5 @@ public class NFAGeneratorImpl implements NFAGenerator {
         getLeafs(node.getLeft(), leafs);
         if (node.hasPair())
             getLeafs(node.getRight(), leafs);
-    }
+    }*/
 }

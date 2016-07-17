@@ -1,25 +1,20 @@
 package projects.NFAGeneratorBerrySethi.TransitionTable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import nfa.State;
 import nfa.TransitionTable;
 import nfa.Transitions;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class TransitionTableImpl implements TransitionTable {
 
     private HashMap<State, TransitionsImpl> transitions = new HashMap<>();
 
     private State startingState;
-    
-    public TransitionTableImpl(){
-    	this.startingState = startingState;
-    }
-    
-    public void setStartState( State startingState){
-    	this.startingState = startingState;
+
+    public void setStartState(State startingState) {
+        this.startingState = startingState;
     }
 
     public void addEntry(StateImpl fromState, StateImpl toState, String character) {
@@ -27,31 +22,22 @@ public class TransitionTableImpl implements TransitionTable {
             transitions.put(fromState, new TransitionsImpl());
         }
 
-        ((TransitionsImpl)transitions.get(fromState)).addTransition(character, toState);
-    }
-    
-    public State getStateFromId(int id){
-    	for( State s : transitions.keySet()){
-    		if( ((StateImpl)s).id() == id){
-    			return s;
-    		}
-    	}
-    	return null;
+        transitions.get(fromState).addTransition(character, toState);
     }
 
-	@Override
-	public Iterator<State> iterator() {
-		return transitions.keySet().iterator();
-	}
+    @Override
+    public Iterator<State> iterator() {
+        return transitions.keySet().iterator();
+    }
 
-	@Override
-	public Transitions getTransitionsFor(State s) {
-		return transitions.get(s);
-	}
+    @Override
+    public Transitions getTransitionsFor(State s) {
+        return transitions.get(s);
+    }
 
-	@Override
-	public State getStart() {
-		return startingState;
-	}
+    @Override
+    public State getStart() {
+        return startingState;
+    }
 
 }

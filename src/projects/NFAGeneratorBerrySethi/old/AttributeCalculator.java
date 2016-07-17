@@ -1,4 +1,6 @@
-package projects.NFAGeneratorBerrySethi;
+package projects.NFAGeneratorBerrySethi.old;
+
+import projects.NFAGeneratorBerrySethi.old.NodeInterface;
 
 /**
  * Provides static recursive functions for computing the node attributes.
