@@ -39,6 +39,21 @@ public class NFAGeneratorBerrySethiTest {
         nfa.TransitionTable table = gen.nfaFromRegex(con);
 
         System.out.println(table);
+        
+        // example in slides
+        CharImpl a1 = new CharImpl("a1");
+        CharImpl b2 = new CharImpl("b2");
+        CharImpl a2 = new CharImpl("a2");
+        CharImpl a3 = new CharImpl("a3");
+        CharImpl b4 = new CharImpl("b4");
+
+        Or westOr = new Or(a1,b2);
+        Or eastOr = new Or(a3,b4);
+        Star star = new Star(westOr);
+        Concat eastConcat = new Concat(a2,eastOr);
+        Concat root = new Concat(star,eastConcat);
+
+        System.out.println(new NFAGeneratorImpl().nfaFromRegex(root));
 
         // Test at least if did not crash.
         assertEquals(1, 1);
