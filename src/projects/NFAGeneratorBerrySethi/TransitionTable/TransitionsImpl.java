@@ -22,8 +22,11 @@ public class TransitionsImpl implements Transitions {
     	return transitions;
     }
 
-    public HashMap<String, State> getTransitions() {
-        return transitions;
+    public String toString() {
+    	String result = "";
+    	for(String string : transitions.keySet()){
+    		result += string + " -> " + ((StateImpl)getStateForCharacter(string)).getId()+ "\t";
+    	}
+    	return result;
     }
-
 }

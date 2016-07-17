@@ -41,23 +41,22 @@ public class TransitionTableImpl implements TransitionTable {
     }
 
     public String toString() {
-
+    	System.out.println("Start state: -1");
     	for( State state : transitions.keySet()){
-    		System.out.print( "\t" + ((StateImpl)state).getId());
-    	}
-    	System.out.println("");
-    	for( State state : transitions.keySet()){
-    		System.out.print( ((StateImpl)state).getId());
+    		System.out.print( ((StateImpl)state).getId()+ ": ");
     		TransitionsImpl tra = (TransitionsImpl) getTransitionsFor(state);
-        	for( State state2 : transitions.keySet()){
-        		if(tra.getTransitions().values().contains(state2)){
-        			System.out.print( "\t" + tra.getStateForCharacter(state2));
-        		}else{
-        			System.out.print( "\t" + "-");
-        		}
-        	}
-        	System.out.println("");
+        	
+        	System.out.println(tra);
     	}
+    	String finalStates = "";
+    	for( State state : transitions.keySet()){
+    		if(state.isFinal()){
+    			finalStates +=  ((StateImpl)state).getId() + ", ";
+    		}
+    	}
+
+    	System.out.println("Final states: " + finalStates);
+    	return "";
     }
 
     public HashMap<State, TransitionsImpl> getStates() {
