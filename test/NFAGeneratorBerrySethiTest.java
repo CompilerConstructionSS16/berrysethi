@@ -5,11 +5,12 @@ import projects.NFAGenerator;
 import projects.NFAGeneratorBerrySethi.NFAGeneratorImpl;
 import regex.Char;
 import regex.ConcatenationExpression;
+import regex.KleeneStarExpression;
 import regex.RegularExpression;
 
 import static org.junit.Assert.assertEquals;
 
-public class NFAGeneratorBerrySethiTest {
+public class NFAGeneratorBerrySethiTest{
 
     @Test
     public void testNFAGeneratorViz() {
@@ -65,6 +66,68 @@ class Concat implements ConcatenationExpression {
     @Override
     public RegularExpression getRHS() {
         return right;
+    }
+}
+
+class Or implements AlternationExpression {
+
+    RegularExpression left;
+    RegularExpression right;
+
+    Or(RegularExpression left, RegularExpression right) {
+        this.left = left;
+        this.right = right;
+    }
+
+    @Override
+    public RegularExpression getLHS() {
+        return left;
+    }
+
+    @Override
+    public RegularExpression getRHS() {
+        return right;
+    }
+}
+class Star implements KleeneStarExpression {
+
+    RegularExpression child;
+
+    Star(RegularExpression child) {
+        this.child = child;
+    }
+
+    @Override
+    public RegularExpression getChild() {
+        return child;
+    }
+}
+
+class Plus implements PlusExpression {
+
+    RegularExpression child;
+
+    Plus(RegularExpression child) {
+        this.child = child;
+    }
+
+    @Override
+    public RegularExpression getChild() {
+        return child;
+    }
+}
+
+class QMark implements OptionalExpression {
+
+    RegularExpression child;
+
+    QMark(RegularExpression child) {
+        this.child = child;
+    }
+
+    @Override
+    public RegularExpression getChild() {
+        return child;
     }
 }
 
