@@ -1,6 +1,6 @@
 This is part of a bigger project. We implemented the Berry-Sethi algorithm to create NFA from regular expressions.
 
-Required libraries:
+Optional libraries:
 * JUnit 4
 * JGraph
 

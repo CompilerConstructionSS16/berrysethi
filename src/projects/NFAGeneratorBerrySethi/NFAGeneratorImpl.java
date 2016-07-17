@@ -12,6 +12,12 @@ public class NFAGeneratorImpl implements NFAGenerator {
 
     @Override
     public TransitionTable nfaFromRegex(RegularExpression regex) {
+
+        VisitorImpl visitor = new VisitorImpl();
+        regex.accept(visitor);
+
+        // TODO
+
         throw new NotImplementedException();
     }
 
