@@ -29,30 +29,32 @@ public class NFAGeneratorImpl implements NFAGenerator {
         LeafVisitor leafs = new LeafVisitor();
         regex.accept(leafs);
 
-        return getTransitionTable(attr, leafs.getLeafs());
+        return getTransitionTable(attr, leafs.getLeafs(), regex);
     }
 
-    private TransitionTable getTransitionTable(Attributes attr, ArrayList<Char> leafs) {
+    private TransitionTable getTransitionTable(Attributes attr, ArrayList<Char> leafs, RegularExpression root) {
         TransitionTableImpl table = new TransitionTableImpl();
 
+        // All the states except root.
+        HashMap<Char, StateImpl> states = new HashMap<>();
+
+        // Root
         StateImpl startState = new StateImpl();
         table.setStartState(startState);
-
-        HashMap<Char, StateImpl> states = new HashMap<>();
 
         int id = 0;
         for (Char character : leafs) {
             states.put(character, new StateImpl(id++));
         }
 
-        if (attr.empty.get(startState))
+        if (attr.empty.get(root))
             startState.setFinal();
 
-        for (RegularExpression exp : attr.last.get(startState))
+        for (RegularExpression exp : attr.last.get(root))
             states.get(exp).setFinal();
 
         for (Char character : leafs) {
-            if (attr.first.get(startState).contains(character)) {
+            if (attr.first.get(root).contains(character)) {
                 table.addEntry(startState, states.get(character), character.getCharacter());
             }
 
