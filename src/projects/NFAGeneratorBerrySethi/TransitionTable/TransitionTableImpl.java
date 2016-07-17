@@ -14,7 +14,11 @@ public class TransitionTableImpl implements TransitionTable {
 
     private State startingState;
     
-    public TransitionTableImpl( StateImpl startingState){
+    public TransitionTableImpl(){
+    	this.startingState = startingState;
+    }
+    
+    public void setStartState( State startingState){
     	this.startingState = startingState;
     }
 
