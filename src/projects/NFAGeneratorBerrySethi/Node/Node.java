@@ -43,6 +43,10 @@ public class Node implements NodeInterface {
             idCounter++;
         }
     }
+    
+    public static void ResetIdCounter(){
+    	idCounter = 0;
+    }
 
     public static void printAttributes(Node node) {
         if (node.isLeaf()) {

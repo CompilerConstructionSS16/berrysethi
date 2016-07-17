@@ -16,7 +16,9 @@ public class TestHelper {
         TransitionTableImpl table = gen.nfaFromRegex(rootNode);
 
         System.out.println(table);
-
+        
+        Node.ResetIdCounter();
+        
         return table;
     }
 
