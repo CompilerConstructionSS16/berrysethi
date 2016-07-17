@@ -40,4 +40,8 @@ public class TransitionTableImpl implements TransitionTable {
         return startingState;
     }
 
+    public String toString() {
+        return transitions.toString();
+    }
+
 }

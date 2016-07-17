@@ -19,15 +19,15 @@ import java.util.HashMap;
 
 public class AttributeCalculatorVisitor implements RegularExpressionVisitor {
 
-    HashMap<RegularExpression, Boolean> empty = new HashMap<>();
+    private HashMap<RegularExpression, Boolean> empty = new HashMap<>();
 
-    HashMap<RegularExpression, ArrayList<RegularExpression>> first = new HashMap<>();
+    private HashMap<RegularExpression, ArrayList<RegularExpression>> first = new HashMap<>();
 
-    HashMap<RegularExpression, ArrayList<RegularExpression>> next = new HashMap<>();
+    private HashMap<RegularExpression, ArrayList<RegularExpression>> next = new HashMap<>();
 
-    HashMap<RegularExpression, ArrayList<RegularExpression>> last = new HashMap<>();
+    private HashMap<RegularExpression, ArrayList<RegularExpression>> last = new HashMap<>();
 
-    ArrayList<Char> leafs = new ArrayList<>();
+    private ArrayList<Char> leafs = new ArrayList<>();
 
     private void addValue(HashMap<RegularExpression, ArrayList<RegularExpression>> map,
                           RegularExpression key, RegularExpression value) {
