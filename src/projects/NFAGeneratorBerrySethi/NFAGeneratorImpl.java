@@ -59,10 +59,11 @@ public class NFAGeneratorImpl implements NFAGenerator {
             }
 
             for (Char character_j : leafs) {
-                if (attr.next.get(character).contains(character_j))
-                    table.addEntry(states.get(character),
-                            states.get(character_j),
-                            character_j.getCharacter());
+                if (attr.next.get(character) != null)
+                    if (attr.next.get(character).contains(character_j))
+                        table.addEntry(states.get(character),
+                                states.get(character_j),
+                                character_j.getCharacter());
             }
 
         }
