@@ -3,10 +3,7 @@ import berrysethi.helper.TestHelper;
 import org.junit.Test;
 import projects.NFAGenerator;
 import projects.NFAGeneratorBerrySethi.NFAGeneratorImpl;
-import regex.Char;
-import regex.ConcatenationExpression;
-import regex.KleeneStarExpression;
-import regex.RegularExpression;
+import regex.*;
 
 import static org.junit.Assert.assertEquals;
 
