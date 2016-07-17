@@ -50,8 +50,10 @@ public class NFAGeneratorImpl implements NFAGenerator {
         if (attr.empty.get(root))
             startState.setFinal();
 
-        for (RegularExpression exp : attr.last.get(root))
+        ArrayList<RegularExpression> lastroot = attr.last.get(root);
+        for (RegularExpression exp : lastroot) {
             states.get(exp).setFinal();
+        }
 
         for (Char character : leafs) {
             if (attr.first.get(root).contains(character)) {
