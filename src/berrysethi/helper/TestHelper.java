@@ -1,28 +1,28 @@
-package helper;
+package berrysethi.helper;
 
-import projects.NFAGeneratorBerrySethi.NFAGeneratorImpl;
-import projects.NFAGeneratorBerrySethi.old.Node.Node;
-import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
+import berrysethi.NFAGeneratorBerrySethi;
+import berrysethi.Node.Node;
+import berrysethi.TransitionTable;
 
 import javax.swing.*;
 
 public class TestHelper {
 
-    public static TransitionTableImpl buildtreeAndParse(String regex) {
+    public static TransitionTable buildtreeAndParse(String regex) {
         System.out.println("Parse regular expression.");
         Node rootNode = TreeBuilder.Parse(StringToolkit.Orify(regex));
 
-        NFAGeneratorImpl gen = new NFAGeneratorImpl();
-        TransitionTableImpl table = gen.nfaFromRegex(rootNode);
+        NFAGeneratorBerrySethi gen = new NFAGeneratorBerrySethi();
+        TransitionTable table = gen.nfaFromRegex(rootNode);
 
         System.out.println(table);
-        
+
         Node.ResetIdCounter();
-        
+
         return table;
     }
 
-    public static void display(TransitionTableImpl table) {
+    public static void display(TransitionTable table) {
         Viz frame = new Viz(table);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 300);

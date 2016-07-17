@@ -1,6 +1,6 @@
-import helper.TestHelper;
+import berrysethi.TransitionTable;
+import berrysethi.helper.TestHelper;
 import org.junit.Test;
-import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ public class NFAGeneratorBerrySethiTest {
 
     @Test
     public void testNFAGeneratorViz() {
-        TransitionTableImpl table = TestHelper.buildtreeAndParse("(a|b)*a(a|b)");
+        TransitionTable table = TestHelper.buildtreeAndParse("(a|b)*a(a|b)");
         TestHelper.display(table);
     }
 

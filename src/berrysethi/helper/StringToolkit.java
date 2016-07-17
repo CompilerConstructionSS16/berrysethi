@@ -1,4 +1,4 @@
-package helper;
+package berrysethi.helper;
 
 public class StringToolkit {
 

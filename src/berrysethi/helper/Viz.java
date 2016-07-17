@@ -1,18 +1,16 @@
-package helper;
+package berrysethi.helper;
 
+import berrysethi.TransitionTable;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.mxgraph.layout.*;
-
 public class Viz extends JFrame {
 
-    public Viz(TransitionTableImpl table) {
+    public Viz(TransitionTable table) {
         super("NFA");
 
         mxGraph graph = new mxGraph();
@@ -56,10 +54,6 @@ public class Viz extends JFrame {
 
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
         graphComponent.setConnectable(false);
-
-        //getContentPane().add(graphComponent, BorderLayout.CENTER);
-        //new mxHierarchicalLayout(graph).execute(graph.getDefaultParent());
-        //new mxParallelEdgeLayout(graph).execute(graph.getDefaultParent());
 
         getContentPane().add(graphComponent);
     }

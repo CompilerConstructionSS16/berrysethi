@@ -1,6 +1,6 @@
-package projects.NFAGeneratorBerrySethi.old.Node;
+package berrysethi.Node;
 
-import projects.NFAGeneratorBerrySethi.old.NodeInterface;
+import berrysethi.NodeInterface;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,7 @@ public class Node implements NodeInterface {
     public int firstCharIndex = -1;
     public NodeAttributes attributes = new NodeAttributes();
     private Node parent = null;
+
     public Node(Type type) {
         this.type = type;
 
@@ -43,9 +44,9 @@ public class Node implements NodeInterface {
             idCounter++;
         }
     }
-    
-    public static void ResetIdCounter(){
-    	idCounter = 0;
+
+    public static void ResetIdCounter() {
+        idCounter = 0;
     }
 
     public static void printAttributes(Node node) {

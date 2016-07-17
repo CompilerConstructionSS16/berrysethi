@@ -1,6 +1,6 @@
-package helper;
+package berrysethi.helper;
 
-import projects.NFAGeneratorBerrySethi.old.Node.Node;
+import berrysethi.Node.Node;
 
 /**
  * Creates a syntax tree based on a regular expression.

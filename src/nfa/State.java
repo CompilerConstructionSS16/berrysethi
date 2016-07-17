@@ -1,6 +1,7 @@
 package nfa;
 
 public interface State {
-	boolean isFinal();
-	boolean isStart();
+    boolean isFinal();
+
+    boolean isStart();
 }
