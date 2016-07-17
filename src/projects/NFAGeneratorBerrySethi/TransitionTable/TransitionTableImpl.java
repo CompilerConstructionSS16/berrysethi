@@ -2,46 +2,52 @@ package projects.NFAGeneratorBerrySethi.TransitionTable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
-public class TransitionTableImpl {
+import nfa.State;
+import nfa.TransitionTable;
+import nfa.Transitions;
 
-    private HashMap<Integer, ArrayList<Integer>> transitions = new HashMap<>();
-    private ArrayList<Integer> startStates = new ArrayList<>();
-    private ArrayList<Integer> endStates = new ArrayList<>();
+public class TransitionTableImpl implements TransitionTable {
 
-    private ArrayList<Integer> states = new ArrayList<>();
+    private HashMap<State, TransitionsImpl> transitions = new HashMap<>();
 
-    public void addEntry(int fromId, int toId) {
-        if (!transitions.containsKey(fromId)) {
-            transitions.put(fromId, new ArrayList<>());
+    private State startingState;
+    
+    public TransitionTableImpl( StateImpl startingState){
+    	this.startingState = startingState;
+    }
+
+    public void addEntry(StateImpl fromState, StateImpl toState, String character) {
+        if (!transitions.containsKey(fromState)) {
+            transitions.put(fromState, new TransitionsImpl());
         }
 
-        transitions.get(fromId).add(toId);
-
-        if (!states.contains(fromId))
-            states.add(fromId);
-        if (!states.contains(toId))
-            states.add(toId);
+        ((TransitionsImpl)transitions.get(fromState)).addTransition(character, toState);
+    }
+    
+    public State getStateFromId(int id){
+    	for( State s : transitions.keySet()){
+    		if( ((StateImpl)s).id() == id){
+    			return s;
+    		}
+    	}
+    	return null;
     }
 
-    public void addStart(int id) {
-        startStates.add(id);
-    }
+	@Override
+	public Iterator<State> iterator() {
+		return transitions.keySet().iterator();
+	}
 
-    public void addEnd(int id) {
-        endStates.add(id);
-    }
+	@Override
+	public Transitions getTransitionsFor(State s) {
+		return transitions.get(s);
+	}
 
-    public String toString() {
-        return transitions.toString();
-    }
-
-    public HashMap<Integer, ArrayList<Integer>> getTransitions() {
-        return transitions;
-    }
-
-    public ArrayList<Integer> getStates() {
-        return states;
-    }
+	@Override
+	public State getStart() {
+		return startingState;
+	}
 
 }
