@@ -17,6 +17,10 @@ public class TransitionsImpl implements Transitions {
     public State getStateForCharacter(String character) {
         return transitions.get(character);
     }
+    
+    public HashMap<String, State> getTransitions(){
+    	return transitions;
+    }
 
     public HashMap<String, State> getTransitions() {
         return transitions;

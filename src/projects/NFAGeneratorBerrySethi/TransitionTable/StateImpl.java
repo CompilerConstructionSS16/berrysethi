@@ -34,7 +34,7 @@ public class StateImpl implements State {
         return start;
     }
 
-    public int getChar() {
+    public int getId() {
         return id;
     }
 }
