@@ -1,8 +1,10 @@
-package berrysethi.helper;
+package helper;
 
-import berrysethi.TransitionTable;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+import nfa.State;
+import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
+import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionsImpl;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 
 public class Viz extends JFrame {
 
-    public Viz(TransitionTable table) {
+    public Viz(TransitionTableImpl table) {
         super("NFA");
 
         mxGraph graph = new mxGraph();
@@ -19,9 +21,11 @@ public class Viz extends JFrame {
         graph.getModel().beginUpdate();
         try {
 
-            HashMap<Integer, Object> vertices = new HashMap<>();
+            HashMap<State, Object> vertices = new HashMap<>();
 
-            int numberOfStates = table.getStates().size();
+            HashMap<State, TransitionsImpl> transitions = table.getStates();
+
+            int numberOfStates = transitions.size();
             int div = numberOfStates / 2;
 
             int x = 50;
@@ -30,9 +34,13 @@ public class Viz extends JFrame {
             int w = 80;
             int h = 40;
 
+            vertices.put(table.getStart(), graph.insertVertex(parent, null, "e", x, y, w, h));
+
+            y += h + 50;
+
             int it = 0;
-            for (Integer id : table.getStates()) {
-                vertices.put(id, graph.insertVertex(parent, null, id.toString(), x, y, w, h));
+            for (State state : transitions.keySet()) {
+                vertices.put(state, graph.insertVertex(parent, null, Integer.toString(it), x, y, w, h));
                 x += w + 50;
                 if (++it == div) {
                     x = 50;
@@ -40,10 +48,10 @@ public class Viz extends JFrame {
                 }
             }
 
-            HashMap<Integer, ArrayList<Integer>> transition = table.getTransitions();
+            for (State state_i : transitions.keySet()) {
+                TransitionsImpl tr = transitions.get(state_i);
 
-            for (Integer nodeid : transition.keySet()) {
-                for (Integer node_j : transition.get(nodeid)) {
+                for (State state_j : tr.get()) {
                     graph.insertEdge(parent, null, node_j.toString(), vertices.get(nodeid), vertices.get(node_j));
                 }
             }

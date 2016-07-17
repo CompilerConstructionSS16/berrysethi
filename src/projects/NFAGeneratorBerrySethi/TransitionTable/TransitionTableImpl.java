@@ -44,4 +44,8 @@ public class TransitionTableImpl implements TransitionTable {
         return transitions.toString();
     }
 
+    public HashMap<State, TransitionsImpl> getStates() {
+        return transitions;
+    }
+
 }

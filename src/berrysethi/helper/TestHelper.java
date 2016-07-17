@@ -3,6 +3,7 @@ package berrysethi.helper;
 import berrysethi.NFAGeneratorBerrySethi;
 import berrysethi.Node.Node;
 import berrysethi.TransitionTable;
+import helper.Viz;
 
 import javax.swing.*;
 
