@@ -7,7 +7,7 @@ import regex.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class NFAGeneratorBerrySethiTest{
+public class NFAGeneratorBerrySethiTest {
 
     @Test
     public void testNFAGeneratorViz() {
@@ -86,6 +86,7 @@ class Or implements AlternationExpression {
         return right;
     }
 }
+
 class Star implements KleeneStarExpression {
 
     RegularExpression child;
