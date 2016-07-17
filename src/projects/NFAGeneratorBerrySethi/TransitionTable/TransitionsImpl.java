@@ -18,4 +18,8 @@ public class TransitionsImpl implements Transitions {
         return transitions.get(character);
     }
 
+    public HashMap<String, State> getTransitions() {
+        return transitions;
+    }
+
 }

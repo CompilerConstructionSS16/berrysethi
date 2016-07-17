@@ -7,7 +7,6 @@ import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionsImpl;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Viz extends JFrame {
@@ -51,8 +50,9 @@ public class Viz extends JFrame {
             for (State state_i : transitions.keySet()) {
                 TransitionsImpl tr = transitions.get(state_i);
 
-                for (State state_j : tr.get()) {
-                    graph.insertEdge(parent, null, node_j.toString(), vertices.get(nodeid), vertices.get(node_j));
+                for (String str : tr.getTransitions().keySet()) {
+                    State state_j = tr.getTransitions().get(str);
+                    graph.insertEdge(parent, null, str, vertices.get(state_i), vertices.get(state_j));
                 }
             }
 
