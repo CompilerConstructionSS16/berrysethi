@@ -33,12 +33,12 @@ public class Viz extends JFrame {
             int w = 80;
             int h = 40;
 
-            vertices.put(table.getStart(), graph.insertVertex(parent, null, "e", x, y, w, h));
+            //vertices.put(table.getStart(), graph.insertVertex(parent, null, "e", x, y, w, h));
 
-            y += h + 50;
+            //y += h + 50;
 
             int it = 0;
-            for (State state : transitions.keySet()) {
+            for (State state : table.getAllStates()) {
                 vertices.put(state, graph.insertVertex(parent, null, Integer.toString(it), x, y, w, h));
                 x += w + 50;
                 if (++it == div) {

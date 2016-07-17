@@ -1,31 +1,25 @@
-import berrysethi.TransitionTable;
-import berrysethi.helper.TestHelper;
+import helper.Viz;
+import nfa.TransitionTable;
 import org.junit.Test;
 import projects.NFAGenerator;
 import projects.NFAGeneratorBerrySethi.NFAGeneratorImpl;
+import projects.NFAGeneratorBerrySethi.TransitionTable.TransitionTableImpl;
 import regex.*;
+
+import javax.swing.*;
 
 import static org.junit.Assert.assertEquals;
 
 public class NFAGeneratorBerrySethiTest {
 
-    @Test
-    public void testNFAGeneratorViz() {
-        TransitionTable table = TestHelper.buildtreeAndParse("(a|b)*a(a|b)");
-        TestHelper.display(table);
-    }
+    public static void display(TransitionTableImpl table) {
+        Viz frame = new Viz(table);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 300);
+        frame.setVisible(true);
 
-    @Test
-    public void testNFAGenerator() {
-        TestHelper.buildtreeAndParse("(ab)*|e+fg?");
-        TestHelper.buildtreeAndParse("ab*");
-        TestHelper.buildtreeAndParse("((ab)*)");
-        TestHelper.buildtreeAndParse("(ab)?|(e)*(dg+h)");
-        TestHelper.buildtreeAndParse("(a|b)*a(a|b)");
-        TestHelper.buildtreeAndParse("ab|xe");
-
-        // Test at least if did not crash.
-        assertEquals(1, 1);
+        while (true) {
+        }
     }
 
     @Test
@@ -36,10 +30,12 @@ public class NFAGeneratorBerrySethiTest {
         Concat con = new Concat(a, b);
 
         NFAGenerator gen = new NFAGeneratorImpl();
-        nfa.TransitionTable table = gen.nfaFromRegex(con);
+        TransitionTable table = gen.nfaFromRegex(con);
 
         System.out.println(table);
-        
+
+        //display((TransitionTableImpl) table);
+
         // example in slides
         CharImpl a1 = new CharImpl("a1");
         CharImpl b2 = new CharImpl("b2");
@@ -47,13 +43,15 @@ public class NFAGeneratorBerrySethiTest {
         CharImpl a3 = new CharImpl("a3");
         CharImpl b4 = new CharImpl("b4");
 
-        Or westOr = new Or(a1,b2);
-        Or eastOr = new Or(a3,b4);
+        Or westOr = new Or(a1, b2);
+        Or eastOr = new Or(a3, b4);
         Star star = new Star(westOr);
-        Concat eastConcat = new Concat(a2,eastOr);
-        Concat root = new Concat(star,eastConcat);
+        Concat eastConcat = new Concat(a2, eastOr);
+        Concat root = new Concat(star, eastConcat);
 
-        System.out.println(new NFAGeneratorImpl().nfaFromRegex(root));
+        TransitionTable table2 = new NFAGeneratorImpl().nfaFromRegex(root);
+
+        display((TransitionTableImpl) table2);
 
         // Test at least if did not crash.
         assertEquals(1, 1);
